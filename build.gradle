@@ -8,3 +8,13 @@ dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.2.0'
     testCompile 'junit:junit:4.11'
 }
+
+jar {
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    manifest { attributes 'Main-Class': 'groovy.ui.Console' }
+}
+
+task console(type: JavaExec, dependsOn: classes){
+    main = 'groovy.ui.Console'
+    classpath = sourceSets.main.runtimeClasspath
+}

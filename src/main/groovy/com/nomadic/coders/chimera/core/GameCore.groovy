@@ -24,7 +24,7 @@ abstract class GameCore {
             new DisplayMode(640, 480, 16, 0)
     ]
 
-    private boolean isRunning
+    volatile boolean isRunning
     protected Screen screen
 
     void stop(){
@@ -42,12 +42,12 @@ abstract class GameCore {
 
     void init(){
         screen = new Screen()
-        DisplayMode displayMode = screen.findFirstCompatibleModes(POSSIBLE_MODES)
-        screen.fullScreenWindow displayMode
+        DisplayMode displayMode = screen.findFirstCompatibleMode(POSSIBLE_MODES)
+        screen.setFullScreen displayMode
 
-        screen.font ['Dialog', Font.PLAIN, FONT_SIZE]
-        screen.background Color.blue
-        screen.foreground Color.white
+        screen.setFont( ['Dialog', Font.PLAIN, FONT_SIZE] as Font)
+        screen.setBackground Color.blue
+        screen.setForeground Color.white
 
         isRunning = true
     }
@@ -70,6 +70,7 @@ abstract class GameCore {
             draw(g)
             g.dispose()
             screen.update()
+
         }
     }
 

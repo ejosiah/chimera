@@ -26,7 +26,7 @@ class Screen {
         device.getDisplayModes()
     }
 
-    DisplayMode findFirstCompatibleModes(List<DisplayMode> modes){
+    DisplayMode findFirstCompatibleMode(List<DisplayMode> modes){
         modes.find{ mode1 ->
             getCompatibleDisplayModes().find{
                 mode2 -> displayModeMatches(mode1, mode2)
@@ -53,14 +53,14 @@ class Screen {
 
     void setFullScreen(DisplayMode displayMode){
         JFrame frame = new JFrame()
-        frame.undecorated true
-        frame.ignoreRepaint true
-        frame.resizable false
+        frame.setUndecorated true
+        frame.setIgnoreRepaint true
+        frame.setResizable false
 
-        device.fullScreenWindow frame
+        device.setFullScreenWindow frame
         if(displayMode && device.displayChangeSupported){
             try{
-                device.displayMode displayMode
+                device.setDisplayMode displayMode
             }catch(e){
 
             }
@@ -96,7 +96,7 @@ class Screen {
 
     void restoreScreen(){
         fullScreenWindow?.dispose()
-        device.fullScreenWindow null
+        device.setFullScreenWindow null
     }
 
     BufferedImage createCompatibleImage(int w, int h, int transparency){
@@ -104,14 +104,14 @@ class Screen {
     }
 
     void setBackground(Color color){
-        fullScreenWindow?.background color
+        fullScreenWindow?.setBackground color
     }
 
     void setForeground(Color color){
-        fullScreenWindow?.foreground color
+        fullScreenWindow?.setForeground color
     }
 
     void setFont(Font font){
-        fullScreenWindow?.font font
+        fullScreenWindow?.setFont font
     }
 }
