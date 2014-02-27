@@ -1,7 +1,9 @@
 package com.nomadic.coders.chimera.graphics
 
 import javax.swing.JFrame
+import java.awt.Color
 import java.awt.DisplayMode
+import java.awt.Font
 import java.awt.Graphics2D
 import java.awt.GraphicsDevice
 import java.awt.GraphicsEnvironment
@@ -99,5 +101,17 @@ class Screen {
 
     BufferedImage createCompatibleImage(int w, int h, int transparency){
         fullScreenWindow?.graphicsConfiguration?.createCompatibleImage(w, h, transparency)
+    }
+
+    void setBackground(Color color){
+        fullScreenWindow?.background color
+    }
+
+    void setForeground(Color color){
+        fullScreenWindow?.foreground color
+    }
+
+    void setFont(Font font){
+        fullScreenWindow?.font font
     }
 }
