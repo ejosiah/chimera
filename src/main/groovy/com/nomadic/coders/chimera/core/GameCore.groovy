@@ -13,7 +13,7 @@ import java.awt.Image
  * Created by jebhomenye on 27/02/2014.
  */
 abstract class GameCore {
-    static final int FONT_SIZE = 24
+    public static final int FONT_SIZE = 24
 
     static final List<DisplayMode> POSSIBLE_MODES = [
             new DisplayMode(800, 600, 32, 0),

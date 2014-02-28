@@ -1,4 +1,4 @@
-package com.nomadic.coders.chimera.core
+package com.nomadic.coders.chimera.graphics
 
 import java.awt.Image
 

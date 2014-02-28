@@ -114,4 +114,12 @@ class Screen {
     void setFont(Font font){
         fullScreenWindow?.setFont font
     }
+
+    Color getBackground(){
+        fullScreenWindow?.background
+    }
+
+    Color getForeground(){
+        fullScreenWindow?.foreground
+    }
 }

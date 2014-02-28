@@ -1,4 +1,4 @@
-package com.nomadic.coders.chimera.core
+package com.nomadic.coders.chimera.graphics
 
 import groovy.transform.Synchronized
 
