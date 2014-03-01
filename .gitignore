@@ -8,3 +8,6 @@
 .idea/
 build/
 *.iml
+images/
+gradlew*
+gradle/

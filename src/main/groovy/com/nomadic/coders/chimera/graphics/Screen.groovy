@@ -1,7 +1,10 @@
 package com.nomadic.coders.chimera.graphics
 
+import com.nomadic.coders.chimera.input.InputListener
+
 import javax.swing.JFrame
 import java.awt.Color
+import java.awt.Cursor
 import java.awt.DisplayMode
 import java.awt.Font
 import java.awt.Graphics2D
@@ -9,6 +12,8 @@ import java.awt.GraphicsDevice
 import java.awt.GraphicsEnvironment
 import java.awt.Toolkit
 import java.awt.Window
+import java.awt.event.KeyListener
+import java.awt.event.MouseListener
 import java.awt.image.BufferStrategy
 import java.awt.image.BufferedImage
 
@@ -121,5 +126,20 @@ class Screen {
 
     Color getForeground(){
         fullScreenWindow?.foreground
+    }
+
+    void addInputListener(InputListener listener){
+        fullScreenWindow.addKeyListener listener
+        fullScreenWindow.addMouseListener listener
+        fullScreenWindow.addMouseMotionListener listener
+        fullScreenWindow.addMouseWheelListener listener
+    }
+
+    void setFocusTraversalKeysEnabled(boolean enabled){
+        fullScreenWindow.setFocusTraversalKeysEnabled enabled
+    }
+
+    void setCursor(Cursor cursor) {
+        fullScreenWindow.setCursor cursor
     }
 }

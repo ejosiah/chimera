@@ -8,6 +8,7 @@ import java.awt.DisplayMode
 import java.awt.Font
 import java.awt.Graphics2D
 import java.awt.Image
+import java.awt.RenderingHints
 
 /**
  * Created by jebhomenye on 27/02/2014.
@@ -79,4 +80,8 @@ abstract class GameCore {
     }
 
     abstract  draw(Graphics2D g)
+
+    void setRenderingHint(Graphics2D g){
+        g.setRenderingHint RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON
+    }
 }
