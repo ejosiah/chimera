@@ -6,7 +6,7 @@ import groovy.transform.Synchronized
  * Created by jay on 01/03/14.
  */
 class Action {
-    enum Behavior{ NORMAL, DETECT_INITAIL_PRESS_ONLY }
+    enum Behavior{ NORMAL, DETECT_INITIAL_PRESS_ONLY  }
     enum State{ RELEASED, PRESSED, WAITING_FOR_RELEASE}
 
     String name
@@ -64,7 +64,7 @@ class Action {
         if(returnVal != 0){
             if(state == State.RELEASED){
                 amount = 0
-            }else if(behavior == Behavior.DETECT_INITAIL_PRESS_ONLY){
+            }else if(behavior == Behavior.DETECT_INITIAL_PRESS_ONLY){
                 state = State.WAITING_FOR_RELEASE
                 amount = 0
             }

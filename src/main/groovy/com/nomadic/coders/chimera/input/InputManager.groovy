@@ -5,18 +5,13 @@ import groovy.transform.Synchronized
 import groovy.util.logging.Log4j
 
 import javax.swing.SwingUtilities
-import java.awt.Component
 import java.awt.Cursor
 import java.awt.Point
 import java.awt.Robot
 import java.awt.Toolkit as TK
 import java.awt.event.KeyEvent
-import java.awt.event.KeyListener
 import java.awt.event.MouseEvent
-import java.awt.event.MouseListener
-import java.awt.event.MouseMotionListener
 import java.awt.event.MouseWheelEvent
-import java.awt.event.MouseWheelListener
 
 /**
  * Created by jay on 01/03/14.
@@ -59,6 +54,9 @@ class InputManager implements InputListener {
         this.screen = screen
         screen.addInputListener this
         screen.setFocusTraversalKeysEnabled false
+
+        mouseLocation = new Point()
+        center = new Point()
     }
 
     void setCursor(Cursor cursor){

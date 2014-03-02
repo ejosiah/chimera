@@ -53,8 +53,12 @@ abstract class GameCore {
         isRunning = true
     }
 
-    Image loadImage(String filename){
+    static loadImage(String filename){
         return new ImageIcon(filename).image
+    }
+
+    static loadImage(URL url){
+        new ImageIcon((url)).image
     }
 
     void gameLoop(){

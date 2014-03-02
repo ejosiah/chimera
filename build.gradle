@@ -21,13 +21,7 @@ task console(type: JavaExec, dependsOn: classes){
     classpath = sourceSets.main.runtimeClasspath
 }
 
-task keyTest(type: JavaExec, dependsOn: classes){
-    main = 'com.nomadic.coders.chimera.example.KeyTest'
-    classpath = sourceSets.main.runtimeClasspath
-    logger.info "classpath $classpath"
-}
-
-task mouseTest(type: JavaExec, dependsOn: classes){
-    main = 'com.nomadic.coders.chimera.example.MouseTest'
-    classpath = sourceSets.main.runtimeClasspath
+task inputTest(type: JavaExec, dependsOn: classes){
+    main = 'com.nomadic.coders.chimera.InputManagerTest'
+    classpath = sourceSets.test.runtimeClasspath
 }

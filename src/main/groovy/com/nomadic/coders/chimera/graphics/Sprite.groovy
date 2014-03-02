@@ -6,11 +6,17 @@ import java.awt.Image
  * Created by jebhomenye on 27/02/2014.
  */
 class Sprite {
-    Animation animation
+    Map<State,Animation> animations
+    State currentState
     float x
     float y
     float dx
     float dy
+
+    Sprite(Map<State,Animation> animations, State startingState){
+        this.animations = animations
+        this.currentState = startingState
+    }
 
     void update(long elapsedTime){
         x += dx * elapsedTime
@@ -28,5 +34,9 @@ class Sprite {
 
     Image getImage(){
         animation.image
+    }
+
+    Animation getAnimation(){
+        animations[currentState]
     }
 }

@@ -33,6 +33,7 @@ class Animation {
                 animationTime %= totalDuration
                 currentFrame = 0
             }
+
             while(animationTime > frames[currentFrame].endTime){
                 currentFrame++
             }
@@ -41,12 +42,12 @@ class Animation {
 
     @Synchronized
     Image getImage(){
-        frames[currentFrame]?.image
+        frames[currentFrame].image
     }
 
     void addFrames(Image image, long duration){
         totalDuration += duration
-        frames << new Frame(image: image, endTime: duration)
+        frames << new Frame(image: image, endTime: totalDuration)
     }
 
     void leftShift(Map frame){
@@ -57,4 +58,8 @@ class Animation {
 class Frame{
     Image image
     long endTime
+
+    String toString(){
+        endTime
+    }
 }
