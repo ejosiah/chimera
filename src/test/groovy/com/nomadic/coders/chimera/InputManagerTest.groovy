@@ -3,7 +3,9 @@ package com.nomadic.coders.chimera
 import com.nomadic.coders.chimera.core.GameCore
 import com.nomadic.coders.chimera.graphics.Animation
 import com.nomadic.coders.chimera.input.Action
+import com.nomadic.coders.chimera.input.EmptyInputListener
 import com.nomadic.coders.chimera.input.InputManager
+import java.awt.Color
 import groovy.transform.Synchronized
 
 import java.awt.Graphics2D
@@ -25,12 +27,18 @@ class InputManagerTest extends GameCore {
     Player player
     Image bgImage
     boolean paused
+    KeyLogger keyLogger
+    MoveDetector moveDetector
 
     void init(){
         super.init()
         inputManager = new InputManager(screen)
         inputManager.relativeMouseMode = true
         inputManager.cursor = InputManager.INVISIBLE_CURSOR
+        keyLogger = new KeyLogger(inputManager: inputManager)
+        moveDetector = new MoveDetector(inputManager: inputManager)
+        screen.addInputListener keyLogger
+        screen.addInputListener moveDetector
 
         createGameActions()
         createSprite()
@@ -66,6 +74,7 @@ class InputManagerTest extends GameCore {
         imagePaths[Player.STANDING] = "images/subzero/standing"
         imagePaths[Player.WALKING] = "images/subzero/walking"
         imagePaths[Player.JUMPING] = "images/subzero/jumping"
+        imagePaths[Player.RUNNING] = "images/subzero/running"
 
         Map animations = [:]
         imagePaths.each { state, path ->
@@ -131,9 +140,15 @@ class InputManagerTest extends GameCore {
         }
         if(moveRight.pressed){
             dx += Player.SPEED
-            player.currentState = Player.WALKING
+            if(moveDetector.running){
+                dx += Player.SPEED * 1.5
+                player.currentState = Player.RUNNING
+            }else{
+                player.currentState = Player.WALKING
+            }
         }
-        if(player.currentState == Player.WALKING
+        if((player.currentState == Player.WALKING
+            || player.currentState == Player.RUNNING)
                 && (moveLeft.state == Action.State.RELEASED
                     && moveRight.state == Action.State.RELEASED)){
             player.currentState = new Standing()
@@ -147,7 +162,15 @@ class InputManagerTest extends GameCore {
 
     @Synchronized @Override
     def draw(Graphics2D g){
-        g.drawImage bgImage, 0, 0, null
+      //  g.drawImage bgImage, 0, 0, null
+
+        g.setColor Color.BLUE
+        g.fillRect 0, 0, screen.width, screen.height
+        g.setColor Color.WHITE
+
+        if(keyLogger.list){
+            g.drawString(keyLogger.data, 5, FONT_SIZE)
+        }
 
         AffineTransform transform = new AffineTransform()
         transform.setToTranslation(player.x, player.y)
@@ -157,5 +180,102 @@ class InputManagerTest extends GameCore {
 
     static main(args){
         new InputManagerTest().run()
+    }
+}
+
+class KeyLogger extends EmptyInputListener{
+    def list = []
+    InputManager inputManager
+    boolean keyHeld
+
+    @Override @Synchronized
+    void keyPressed(KeyEvent e) {
+        Action action = inputManager.getKeyAction e
+        if(action){
+            switch(e.keyCode){
+                case KeyEvent.VK_RIGHT:
+                    if(!keyHeld){
+                        list << "->"
+                        keyHeld = true
+                    }
+                    break;
+                case KeyEvent.VK_LEFT:
+                    if(!keyHeld){
+                        list << "<-"
+                        keyHeld = true
+                    }
+                    break;
+                case KeyEvent.VK_UP:
+                    list << "up"
+                    break;
+                case KeyEvent.VK_DOWN:
+                    list << "down"
+            }
+        }
+    }
+
+    @Override
+    void keyReleased(KeyEvent e){
+        keyHeld = false
+    }
+
+    String getData(){
+        list.join(", ")
+    }
+}
+
+class MoveDetector extends EmptyInputListener{
+    def actions = []
+    InputManager inputManager
+    boolean keyHeld
+    long lastInputTime
+
+    @Override @Synchronized
+    void keyPressed(KeyEvent e) {
+        Action action = inputManager.getKeyAction e
+        if(action){
+            switch(e.keyCode){
+                case KeyEvent.VK_RIGHT:
+                    if(!keyHeld){
+                        if(lastInputTime){
+                            if(System.currentTimeMillis() - lastInputTime > 300L){
+                                actions.clear()
+                            }
+                        }
+                        actions << action
+                        lastInputTime = System.currentTimeMillis()
+                        keyHeld = true
+                    }
+                    break;
+                case KeyEvent.VK_LEFT:
+                    if(!keyHeld){
+                        actions << action
+                        keyHeld = true
+                    }
+                    break;
+                case KeyEvent.VK_UP:
+                    break;
+                case KeyEvent.VK_DOWN:
+                    break;
+            }
+        }
+    }
+
+    @Override
+    void keyReleased(KeyEvent e){
+        switch (e.keyCode){
+            case KeyEvent.VK_RIGHT:
+                if(running){
+                    actions.clear()
+                }
+            case KeyEvent.VK_LEFT:
+                keyHeld = false
+        }
+
+    }
+
+    boolean isRunning(){
+        println( actions*.name)
+        actions*.name == ["moveRight", "moveRight"]
     }
 }

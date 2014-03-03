@@ -16,6 +16,7 @@ class Player extends Sprite{
     static final State JUMPING = new Jumping()
     static final State STANDING = new Standing()
     static final State WALKING = new Walking()
+    static final State RUNNING = new Running()
 
     int floorY
 

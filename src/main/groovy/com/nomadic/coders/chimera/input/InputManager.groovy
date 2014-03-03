@@ -10,6 +10,7 @@ import java.awt.Point
 import java.awt.Robot
 import java.awt.Toolkit as TK
 import java.awt.event.KeyEvent
+import java.awt.event.KeyListener
 import java.awt.event.MouseEvent
 import java.awt.event.MouseWheelEvent
 
@@ -103,6 +104,7 @@ class InputManager implements InputListener {
         
         keyActions.each{ k, v -> if(action == v) list << getKeyName(k)  }
         mouseActions.each{ k, v -> if(action == v) list << k.value }
+        list
     }
 
     String getKeyName(int keyCode) {
@@ -132,11 +134,11 @@ class InputManager implements InputListener {
         }
     }
 
-    private getKeyAction(KeyEvent e){
+    Action getKeyAction(KeyEvent e){
         keyActions[e.keyCode]
     }
 
-    private getMouseButtonAction(MouseEvent e){
+    Action getMouseButtonAction(MouseEvent e){
         MouseCode code = getMouseButtonCode(e)
         mouseActions[code]
     }

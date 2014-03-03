@@ -71,4 +71,8 @@ class Action {
         }
         returnVal
     }
+
+    boolean isHeldDown(){
+        state != State.RELEASED
+    }
 }
