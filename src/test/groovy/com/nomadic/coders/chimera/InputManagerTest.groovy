@@ -68,7 +68,7 @@ class InputManagerTest extends GameCore {
     }
 
     void createSprite() {
-        bgImage = loadImage "images/background.jpg"
+        bgImage = loadImage "images/arena.png"
 
         def imagePaths = [:]
         imagePaths[Player.STANDING] = "images/subzero/standing"
@@ -162,20 +162,19 @@ class InputManagerTest extends GameCore {
 
     @Synchronized @Override
     def draw(Graphics2D g){
-      //  g.drawImage bgImage, 0, 0, null
+        int x = -(bgImage.getWidth(null) - screen.width)/2
+        g.drawImage bgImage, x, 0, null
 
-        g.setColor Color.BLUE
-        g.fillRect 0, 0, screen.width, screen.height
-        g.setColor Color.WHITE
+//        g.setColor Color.BLUE
+//        g.fillRect 0, 0, screen.width, screen.height
+//        g.setColor Color.WHITE
 
-        if(keyLogger.list){
-            g.drawString(keyLogger.data, 5, FONT_SIZE)
-        }
+//        if(keyLogger.list){
+//            g.drawString(keyLogger.data, 5, FONT_SIZE)
+//        }
+        player.translate().scale(2, 2)
 
-        AffineTransform transform = new AffineTransform()
-        transform.setToTranslation(player.x, player.y)
-        transform.scale(2, 2)
-        g.drawImage player.image, transform, null
+        g.drawImage player.image, player.transform, null
     }
 
     static main(args){
