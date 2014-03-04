@@ -1,0 +1,3 @@
+<html>Click an action's input box to change its keys
+<br>An action can have at most three keys associated with it.
+<br>Press Baskspace to clear an action's key

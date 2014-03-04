@@ -69,6 +69,7 @@ class InputManagerTest extends GameCore {
 
     void createSprite() {
         bgImage = loadImage "images/arena.png"
+        //bgImage = loadImage "images/background.jpg"
 
         def imagePaths = [:]
         imagePaths[Player.STANDING] = "images/subzero/standing"
