@@ -1,10 +1,11 @@
-package com.nomadic.coders.chimera.audio
+package com.nomadic.coders.chimera.sound
+
+import com.nomadic.coders.chimera.sound.io.LoopingByteInputStream
 
 import javax.sound.sampled.AudioFormat
 import javax.sound.sampled.AudioInputStream
 import javax.sound.sampled.AudioSystem
 import javax.sound.sampled.DataLine
-import javax.sound.sampled.Line
 import javax.sound.sampled.SourceDataLine
 
 /**
@@ -29,15 +30,12 @@ class Sound {
         dataIn.readFully(sample)
     }
 
-    void play(){
-        InputStream source = new ByteArrayInputStream(sample)
-        println "sample size ${sample.length}"
-
+    void play(InputStream source){
         DataLine.Info info = new DataLine.Info(SourceDataLine.class, format)
         SourceDataLine line = AudioSystem.getLine(info)
 
         int bufferSize = format.frameSize * Math.round(format.sampleRate / 10)
-        println "sample rate ${bufferSize * 10}"
+        println "sample rate ${bufferSize}"
         line.open(format, bufferSize)
         line.start()
         source.eachByte(bufferSize){ buffer, length -> line.write(buffer, 0, length) }
@@ -47,8 +45,7 @@ class Sound {
     }
 
     static main(args){
-        Sound sound = new Sound("sounds/wave.wav")
-        sound.play()
-        System.exit 0
+        Sound sound = new Sound("sounds/voice.wav")
+        sound.play(new ByteArrayInputStream(sound.sample))
     }
 }

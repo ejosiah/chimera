@@ -4,6 +4,7 @@ import com.nomadic.coders.chimera.input.InputManager
 
 import java.awt.Image
 import java.awt.geom.AffineTransform
+import java.awt.geom.Point2D
 
 /**
  * Created by jebhomenye on 27/02/2014.
@@ -67,4 +68,11 @@ class Sprite {
         this
     }
 
+    Point2D location(){
+        new Point2D.Float(x, y)
+    }
+
+    float distanceFrom(Sprite anotherSprite) {
+        location().distance(anotherSprite.location())
+    }
 }
