@@ -8,14 +8,17 @@ import java.awt.Image
  * Created by jebhomenye on 27/02/2014.
  */
 class Animation {
-    List<Frame> frames
+    List<Frame> frames = []
     int currentFrame
     long animationTime
     long totalDuration
 
     Animation(){
-        frames = []
-        totalDuration = 0
+        this([])
+    }
+
+    Animation(List<Frame> frames){
+        frames.each{ addFrames(it.image, it.endTime)}
         start()
     }
 

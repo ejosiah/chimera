@@ -22,6 +22,12 @@ class Sprite {
     float dy
     AffineTransform transform
 
+    Sprite(Animation animation){
+       animations = [:]
+       this.animations[State.STATE_LESS] = animation
+       this.currentState = State.STATE_LESS
+        transform = new AffineTransform()
+    }
 
     Sprite(Map<State,Animation> animations, State startingState){
         this.animations = animations

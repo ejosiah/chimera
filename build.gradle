@@ -25,3 +25,13 @@ task inputTest(type: JavaExec, dependsOn: classes){
     main = 'com.nomadic.coders.chimera.InputManagerTest'
     classpath = sourceSets.test.runtimeClasspath
 }
+
+task menuTest(type: JavaExec, dependsOn: classes){
+    main = 'com.nomadic.coders.chimera.MenuTest'
+    classpath = sourceSets.test.runtimeClasspath
+}
+
+task keyConfigTest(type: JavaExec, dependsOn: classes){
+    main = 'com.nomadic.coders.chimera.KeyConfigTest'
+    classpath = sourceSets.test.runtimeClasspath
+}

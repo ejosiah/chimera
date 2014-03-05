@@ -23,7 +23,7 @@ class InputManagerTest extends GameCore {
     Action moveLeft
     Action moveRight
     Action pause
-    InputManager inputManager
+    protected InputManager inputManager
     Player player
     Image bgImage
     boolean paused
@@ -166,13 +166,6 @@ class InputManagerTest extends GameCore {
         int x = -(bgImage.getWidth(null) - screen.width)/2
         g.drawImage bgImage, x, 0, null
 
-//        g.setColor Color.BLUE
-//        g.fillRect 0, 0, screen.width, screen.height
-//        g.setColor Color.WHITE
-
-//        if(keyLogger.list){
-//            g.drawString(keyLogger.data, 5, FONT_SIZE)
-//        }
         player.translate().scale(2, 2)
 
         g.drawImage player.image, player.transform, null

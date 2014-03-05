@@ -7,6 +7,7 @@ import groovy.transform.EqualsAndHashCode
  */
 @EqualsAndHashCode
 abstract class State {
+    static State STATE_LESS = new State("state less") {}
     String name
 
     State(String name){

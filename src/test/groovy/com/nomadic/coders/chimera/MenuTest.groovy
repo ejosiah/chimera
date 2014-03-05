@@ -91,9 +91,9 @@ class MenuTest extends InputManagerTest implements ActionListener{
         button.border = null
         button.contentAreaFilled = false
         button.cursor = cursor
-        button.icon = iconRollover
+        button.icon = iconDefault
         button.rolloverIcon = iconRollover
-        button.pressedIcon = iconRollover
+        button.pressedIcon = iconPressed
 
         return button
 
