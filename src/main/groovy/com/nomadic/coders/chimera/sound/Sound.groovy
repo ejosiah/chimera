@@ -1,6 +1,5 @@
 package com.nomadic.coders.chimera.sound
 
-import com.nomadic.coders.chimera.sound.filters.EchoFilter
 import com.nomadic.coders.chimera.sound.filters.SoundFilter
 import com.nomadic.coders.chimera.sound.io.FilteredSoundStream
 import com.nomadic.coders.chimera.sound.io.LoopingByteInputStream
@@ -9,14 +8,12 @@ import javax.sound.sampled.AudioFormat
 import javax.sound.sampled.AudioInputStream
 import javax.sound.sampled.AudioSystem
 import javax.sound.sampled.DataLine
-import javax.sound.sampled.Mixer
 import javax.sound.sampled.SourceDataLine
-import java.util.concurrent.locks.Lock
 
 /**
  * Created by jay on 04/03/14.
  */
-class Sound extends SoundAOP{
+class Sound extends SoundService{
 
     byte[] sample
     AudioFormat format
@@ -37,23 +34,25 @@ class Sound extends SoundAOP{
     }
 
     void play(boolean loop=false, SoundFilter filter=null){
-        InputStream source = createStream(loop, filter)
-        DataLine.Info info = new DataLine.Info(SourceDataLine.class, format)
-        SourceDataLine line = AudioSystem.getLine(info)
+        executorService.execute{
+            InputStream source = createStream(loop, filter)
+            DataLine.Info info = new DataLine.Info(SourceDataLine.class, format)
+            SourceDataLine line = AudioSystem.getLine(info)
 
-        int bufferSize = format.frameSize * Math.round(format.sampleRate / 10)
+            int bufferSize = format.frameSize * Math.round(format.sampleRate / 10)
 
 
 
-        line.open(format, bufferSize)
-        line.start()
-        source.eachByte(bufferSize){ buffer, length ->
-            waitIfGamePaused()
-            line.write(buffer, 0, length)
+            line.open(format, bufferSize)
+            line.start()
+            source.eachByte(bufferSize){ buffer, length ->
+                waitIfGamePaused()
+                line.write(buffer, 0, length)
+            }
+
+            line.drain()
+            line.close()
         }
-
-        line.drain()
-        line.close()
     }
 
     InputStream createStream(boolean loop, SoundFilter soundFilter) {

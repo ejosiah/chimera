@@ -7,18 +7,21 @@ package com.nomadic.coders.chimera.sound
 class SoundTest {
 
     static main(args){
-        SoundManager.instance = new SoundManager(1)
+        Sound.initWith(10)
         Sound sound = new Sound("sounds/voice.wav")
 
         sound.play(true)
 
         Thread.start{
             Thread.sleep 5000
-            SoundManager.instance.paused = true
+            Sound.paused = true
             Thread.sleep 2000
-            SoundManager.instance.paused = false
+            Sound.paused = false
+            sound.play(true)
             Thread.sleep 2000
-            SoundManager.instance.shutdownNow()
+            sound.play(true)
+            println sound.shutdown()
+          //  println "shutdown"
         }
     }
 }

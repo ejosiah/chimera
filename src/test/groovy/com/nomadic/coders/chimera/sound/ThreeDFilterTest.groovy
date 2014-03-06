@@ -8,7 +8,7 @@ import com.nomadic.coders.chimera.input.InputManager
 import com.nomadic.coders.chimera.sound.filters.ThreeDFilter
 import com.nomadic.coders.chimera.sound.io.FilteredSoundStream
 import com.nomadic.coders.chimera.sound.io.LoopingByteInputStream
-import com.sun.glass.events.KeyEvent
+import java.awt.event.KeyEvent
 
 import java.awt.Color
 import java.awt.Graphics2D
@@ -30,7 +30,7 @@ class ThreeDFilterTest extends GameCore {
     @Override
     void init(){
         super.init()
-
+        Sound.initWith(1)
         exit = new GameAction("exit", GameAction.Behavior.DETECT_INITIAL_PRESS_ONLY)
         inputManager = new InputManager(screen)
         inputManager.mapToKey exit, KeyEvent.VK_ESCAPE
@@ -41,9 +41,8 @@ class ThreeDFilterTest extends GameCore {
         bzzSound = new Sound("sounds/fly-bzz.wav")
 
         ThreeDFilter filter = new ThreeDFilter( fly, listener, screen.height)
-        bzzSoundStream = new FilteredSoundStream(new LoopingByteInputStream(bzzSound.sample), filter)
 
-        Thread.start{ bzzSound.play(bzzSoundStream) }
+        bzzSound.play(true, filter)
     }
 
     void createSprites() {
@@ -68,6 +67,7 @@ class ThreeDFilterTest extends GameCore {
     void update(long elapsedTime){
         if(exit.isPressed()){
             stop()
+            Sound.shutdown()
         }else{
             listener.update(elapsedTime)
             fly.update(elapsedTime)
