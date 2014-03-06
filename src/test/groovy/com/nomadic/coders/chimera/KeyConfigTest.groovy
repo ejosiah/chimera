@@ -1,6 +1,6 @@
 package com.nomadic.coders.chimera
 
-import com.nomadic.coders.chimera.input.Action
+import com.nomadic.coders.chimera.input.GameAction
 import com.nomadic.coders.chimera.input.InputManager
 
 import javax.swing.BorderFactory
@@ -68,7 +68,7 @@ class KeyConfigTest extends MenuTest{
         screen.fullScreenWindow.layeredPane.add dialog, JLayeredPane.MODAL_LAYER
     }
 
-    void addActionConfig(JPanel panel, Action action) {
+    void addActionConfig(JPanel panel, GameAction action) {
         JLabel label = [action.name, JLabel.RIGHT]
         InputComponent input = new InputComponent(action)
         panel.add(label)
@@ -99,9 +99,9 @@ class KeyConfigTest extends MenuTest{
 
     class InputComponent extends JTextField{
 
-        Action gameAction
+        GameAction gameAction
 
-        InputComponent(Action action){
+        InputComponent(GameAction action){
             this.gameAction = action
             setText()
             enableEvents(KeyEvent.KEY_EVENT_MASK

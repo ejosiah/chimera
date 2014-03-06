@@ -10,7 +10,6 @@ import java.awt.Point
 import java.awt.Robot
 import java.awt.Toolkit as TK
 import java.awt.event.KeyEvent
-import java.awt.event.KeyListener
 import java.awt.event.MouseEvent
 import java.awt.event.MouseWheelEvent
 
@@ -42,8 +41,8 @@ class InputManager implements InputListener {
         }
     }
 
-    Map<Integer, Action> keyActions = [:]
-    Map<MouseCode, Action> mouseActions = [:]
+    Map<Integer, GameAction> keyActions = [:]
+    Map<MouseCode, GameAction> mouseActions = [:]
 
     Point mouseLocation
     Point center
@@ -85,21 +84,21 @@ class InputManager implements InputListener {
         robot != null
     }
 
-    void mapToKey(Action action, int keyCode){
+    void mapToKey(GameAction action, int keyCode){
         keyActions[keyCode] = action
     }
 
-    void mapToMouse(Action action, MouseCode mouseCode){
+    void mapToMouse(GameAction action, MouseCode mouseCode){
         mouseActions[mouseCode] = action
     }
 
-    void clear(Action action){
+    void clear(GameAction action){
         keyActions.each{ k, v -> if(action == v) keyActions.remove k}
         mouseActions.each{k, v -> if (action == v) mouseActions.remove k}
         action.reset()
     }
     
-    def getMapedKeysFor(Action action){
+    def getMapedKeysFor(GameAction action){
         def list = []
         
         keyActions.each{ k, v -> if(action == v) list << getKeyName(k)  }
@@ -134,11 +133,11 @@ class InputManager implements InputListener {
         }
     }
 
-    Action getKeyAction(KeyEvent e){
+    GameAction getKeyAction(KeyEvent e){
         keyActions[e.keyCode]
     }
 
-    Action getMouseButtonAction(MouseEvent e){
+    GameAction getMouseButtonAction(MouseEvent e){
         MouseCode code = getMouseButtonCode(e)
         mouseActions[code]
     }
@@ -217,7 +216,7 @@ class InputManager implements InputListener {
     }
 
     void mouseHelper(MouseCode positive, MouseCode negative, int amount) {
-        Action action = amount < 0 ?  mouseActions[negative] : mouseActions[positive]
+        GameAction action = amount < 0 ?  mouseActions[negative] : mouseActions[positive]
         action?.press Math.abs(amount)
         action?.release()
     }

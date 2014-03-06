@@ -5,7 +5,7 @@ import groovy.transform.Synchronized
 /**
  * Created by jay on 01/03/14.
  */
-class Action {
+class GameAction {
     enum Behavior{ NORMAL, DETECT_INITIAL_PRESS_ONLY  }
     enum State{ RELEASED, PRESSED, WAITING_FOR_RELEASE}
 
@@ -14,11 +14,11 @@ class Action {
     State state
     int amount
 
-    Action(String name){
+    GameAction(String name){
         this(name, Behavior.NORMAL)
     }
 
-    Action(String name, Behavior behavior){
+    GameAction(String name, Behavior behavior){
         this.name = name
         this.behavior = behavior
         reset()

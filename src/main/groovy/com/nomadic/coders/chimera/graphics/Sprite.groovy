@@ -75,4 +75,12 @@ class Sprite {
     float distanceFrom(Sprite anotherSprite) {
         location().distance(anotherSprite.location())
     }
+
+    int getIntX(){
+        return Math.round(x)
+    }
+
+    int getIntY(){
+        return  Math.round(y)
+    }
 }

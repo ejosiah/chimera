@@ -7,14 +7,14 @@ import com.nomadic.coders.chimera.sound.filters.SoundFilter
  */
 class FilteredSoundStream extends FilterInputStream{
 
-    static final int REMANING_SIZE_UNKNOWN = -1
+    static final int REMAINING_SIZE_UNKNOWN = -1
     int remainingSize
     SoundFilter soundFilter
 
     FilteredSoundStream(InputStream inputStream, SoundFilter soundFilter) {
         super(inputStream)
         this.soundFilter = soundFilter
-        remainingSize = REMANING_SIZE_UNKNOWN
+        remainingSize = REMAINING_SIZE_UNKNOWN
 
     }
 
@@ -23,9 +23,10 @@ class FilteredSoundStream extends FilterInputStream{
         int bytesRead = super.read(samples, offset, length)
         if(bytesRead > 0){
            soundFilter.filter(samples, offset, bytesRead)
+           return bytesRead
         }
 
-        if(remainingSize == REMANING_SIZE_UNKNOWN){
+        if(remainingSize == REMAINING_SIZE_UNKNOWN){
             remainingSize = soundFilter.remainingSize
             println "Remaining size : $remainingSize, length: $length"
 

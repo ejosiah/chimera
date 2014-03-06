@@ -1,8 +1,7 @@
 package com.nomadic.coders.chimera
 
-import com.nomadic.coders.chimera.core.GameCore
 import com.nomadic.coders.chimera.graphics.VoidRepaintManager
-import com.nomadic.coders.chimera.input.Action
+import com.nomadic.coders.chimera.input.GameAction
 
 import javax.swing.ImageIcon
 import javax.swing.JButton
@@ -22,7 +21,7 @@ import java.awt.event.ActionListener
  */
 class MenuTest extends InputManagerTest implements ActionListener{
 
-    Action configAction
+    GameAction configAction
 
     JButton playButton
     JButton configButton
@@ -35,7 +34,7 @@ class MenuTest extends InputManagerTest implements ActionListener{
     void init(){
         super.init()
         VoidRepaintManager.install()
-        configAction = new Action("config")
+        configAction = new GameAction("config")
 
         quitButton = createButton("quit", "Quit")
         playButton = createButton("play", "Continue")

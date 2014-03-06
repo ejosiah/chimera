@@ -35,3 +35,8 @@ task keyConfigTest(type: JavaExec, dependsOn: classes){
     main = 'com.nomadic.coders.chimera.KeyConfigTest'
     classpath = sourceSets.test.runtimeClasspath
 }
+
+task threeDFilterTest(type: JavaExec, dependsOn: classes){
+    main = 'com.nomadic.coders.chimera.ThreeDFilterTest'
+    classpath = sourceSets.test.runtimeClasspath
+}

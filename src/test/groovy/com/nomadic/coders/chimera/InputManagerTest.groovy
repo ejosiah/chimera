@@ -2,27 +2,25 @@ package com.nomadic.coders.chimera
 
 import com.nomadic.coders.chimera.core.GameCore
 import com.nomadic.coders.chimera.graphics.Animation
-import com.nomadic.coders.chimera.input.Action
 import com.nomadic.coders.chimera.input.EmptyInputListener
+import com.nomadic.coders.chimera.input.GameAction
 import com.nomadic.coders.chimera.input.InputManager
-import java.awt.Color
 import groovy.transform.Synchronized
 
 import java.awt.Graphics2D
 import java.awt.Image
 import java.awt.event.KeyEvent
-import java.awt.geom.AffineTransform
 
 /**
  * Created by jay on 02/03/14.
  */
 class InputManagerTest extends GameCore {
 
-    Action jump
-    Action exit
-    Action moveLeft
-    Action moveRight
-    Action pause
+    GameAction jump
+    GameAction exit
+    GameAction moveLeft
+    GameAction moveRight
+    GameAction pause
     protected InputManager inputManager
     Player player
     Image bgImage
@@ -46,11 +44,11 @@ class InputManagerTest extends GameCore {
     }
 
     void createGameActions() {
-        jump = new Action("jump", Action.Behavior.DETECT_INITIAL_PRESS_ONLY)
-        exit = new Action("exit", Action.Behavior.DETECT_INITIAL_PRESS_ONLY)
-        moveLeft = new Action("moveLeft")
-        moveRight = new Action("moveRight")
-        pause = new Action("pause", Action.Behavior.DETECT_INITIAL_PRESS_ONLY)
+        jump = new GameAction("jump", GameAction.Behavior.DETECT_INITIAL_PRESS_ONLY)
+        exit = new GameAction("exit", GameAction.Behavior.DETECT_INITIAL_PRESS_ONLY)
+        moveLeft = new GameAction("moveLeft")
+        moveRight = new GameAction("moveRight")
+        pause = new GameAction("pause", GameAction.Behavior.DETECT_INITIAL_PRESS_ONLY)
 
         inputManager.mapToKey exit, KeyEvent.VK_ESCAPE
         inputManager.mapToKey pause, KeyEvent.VK_P
@@ -150,8 +148,8 @@ class InputManagerTest extends GameCore {
         }
         if((player.currentState == Player.WALKING
             || player.currentState == Player.RUNNING)
-                && (moveLeft.state == Action.State.RELEASED
-                    && moveRight.state == Action.State.RELEASED)){
+                && (moveLeft.state == GameAction.State.RELEASED
+                    && moveRight.state == GameAction.State.RELEASED)){
             player.currentState = new Standing()
         }
         player.dx = dx
@@ -183,7 +181,7 @@ class KeyLogger extends EmptyInputListener{
 
     @Override @Synchronized
     void keyPressed(KeyEvent e) {
-        Action action = inputManager.getKeyAction e
+        GameAction action = inputManager.getKeyAction e
         if(action){
             switch(e.keyCode){
                 case KeyEvent.VK_RIGHT:
@@ -225,7 +223,7 @@ class MoveDetector extends EmptyInputListener{
 
     @Override @Synchronized
     void keyPressed(KeyEvent e) {
-        Action action = inputManager.getKeyAction e
+        GameAction action = inputManager.getKeyAction e
         if(action){
             switch(e.keyCode){
                 case KeyEvent.VK_RIGHT:

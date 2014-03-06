@@ -30,7 +30,7 @@ class Animation {
 
     @Synchronized
     void update(long elapsedTime){
-        if(frames){
+        if(frames.size() > 1){
             animationTime += elapsedTime
             if(animationTime >= totalDuration){
                 animationTime %= totalDuration

@@ -39,7 +39,7 @@ class Screen {
         }
     }
 
-    boolean displayModeMatches(DisplayMode mode1, DisplayMode mode2){
+    static displayModeMatches(DisplayMode mode1, DisplayMode mode2){
         if(mode1.width != mode2.width || mode1.height != mode2.height){
             return false
         }
