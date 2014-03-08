@@ -7,7 +7,6 @@ import java.awt.Color
 import java.awt.DisplayMode
 import java.awt.Font
 import java.awt.Graphics2D
-import java.awt.Image
 import java.awt.RenderingHints
 
 /**
@@ -38,17 +37,30 @@ abstract class GameCore {
             gameLoop()
         }finally{
             screen.restoreScreen()
+            lazyExit()
         }
+    }
+
+    static lazyExit(){
+        Thread thread = new Thread({
+            try{
+                Thread.sleep 2000
+            }finally{
+                System.exit 0
+            }
+        })
+        thread.daemon = true
+        thread.start()
     }
 
     void init(){
         screen = new Screen()
         DisplayMode displayMode = screen.findFirstCompatibleMode(POSSIBLE_MODES)
-        screen.setFullScreen displayMode
+        screen.createFullScreen displayMode
 
-        screen.setFont( ['Dialog', Font.PLAIN, FONT_SIZE] as Font)
-        screen.setBackground Color.blue
-        screen.setForeground Color.white
+        screen.font =  [ 'Dialog', Font.PLAIN, FONT_SIZE] as Font
+        screen.background = Color.blue
+        screen.foreground = Color.white
 
         isRunning = true
     }

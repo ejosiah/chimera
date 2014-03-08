@@ -36,9 +36,8 @@ class MidiPlayer implements MetaEventListener {
 
     @Override
     void meta(MetaMessage metaMessage) {
-        println "message type: ${metaMessage.type}"
         if(metaMessage.type == END_OF_TRACK && sequencer?.open && loop){
-            println "restarting sequence, seq: ${sequencer?.open}, loop: $loop"
+            sequencer?.tickPosition = 0
             sequencer?.start()
         }
     }
@@ -46,7 +45,7 @@ class MidiPlayer implements MetaEventListener {
     void stop(){
         if(sequencer?.open){
             sequencer?.stop()
-            sequencer?.setMicrosecondPosition(0)
+            sequencer?.microsecondPosition = 0
         }
 
     }

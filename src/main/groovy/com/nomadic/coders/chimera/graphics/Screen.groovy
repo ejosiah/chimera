@@ -56,7 +56,7 @@ class Screen {
         return true
     }
 
-    void setFullScreen(DisplayMode displayMode){
+    void createFullScreen(DisplayMode displayMode){
         JFrame frame = new JFrame()
         frame.setUndecorated true
         frame.setIgnoreRepaint true

@@ -20,7 +20,7 @@ class MidiTest implements MetaEventListener {
         player.play(sequence, true)
 
         println "Playing (without drums)..."
-        player.sequencer.setTrackMute(DRUM_TRACK, true)
+        player.sequencer.setTrackMute DRUM_TRACK, true
         player.sequencer.addMetaEventListener this
     }
 
@@ -31,9 +31,6 @@ class MidiTest implements MetaEventListener {
                 println "Turning on drums"
                 player.sequencer.setTrackMute DRUM_TRACK, false
             }
-        }else{
-            println "Exiting..."
-            System.exit 0
         }
     }
 

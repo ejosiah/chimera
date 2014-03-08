@@ -83,4 +83,12 @@ class Sprite {
     int getIntY(){
         return  Math.round(y)
     }
+
+    boolean collidesWith(Sprite anotherSprite){
+        if(this == anotherSprite){
+            return false
+        }else{
+            return (intX < anotherSprite.intX + anotherSprite.width) && (anotherSprite.intX < intX + width) && (intY < anotherSprite.intY + anotherSprite.height) && anotherSprite.intY < intY + height
+        }
+    }
 }
