@@ -33,15 +33,15 @@ class ThreeDFilter extends SoundFilter {
         newVolume = newVolume > 0 ? newVolume : 0
 
         int shift = 0
-        for(int i in offset..<((offset+length)/2)){
+        offset.step(offset+length, 2){ i ->
            float volume = newVolume
            if(shift < NO_OF_SHIFTING_SAMPLES){
                volume = lastVolume + (newVolume - lastVolume) * shift /NO_OF_SHIFTING_SAMPLES
                shift++
            }
-           short oldSample = getSample(samples, i * 2)
+           short oldSample = getSample(samples, i)
            short newSample = oldSample * volume
-           setSample(samples, i*2, newSample)
+           setSample(samples, i, newSample)
         }
         lastVolume = newVolume
     }

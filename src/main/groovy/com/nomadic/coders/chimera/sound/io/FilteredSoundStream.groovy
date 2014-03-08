@@ -28,8 +28,6 @@ class FilteredSoundStream extends FilterInputStream{
 
         if(remainingSize == REMAINING_SIZE_UNKNOWN){
             remainingSize = soundFilter.remainingSize
-            println "Remaining size : $remainingSize, length: $length"
-
             // round down to nearest multiple of 4
             // typical frame size
             remainingSize = (remainingSize/4) * 4

@@ -9,11 +9,14 @@ import com.nomadic.coders.chimera.sound.io.FilteredSoundStream
 class EchoFilterTest {
 
     static main(args){
+        Sound.initWith(1)
         Sound sound = new Sound("sounds/voice.wav")
-        InputStream is = new ByteArrayInputStream(sound.sample)
         EchoFilter filter = new EchoFilter(11025, 0.6F)
+        try{
+            sound.play(false, filter)
+        }finally{
+            Sound.shutdown()
+        }
 
-        InputStream fis = new FilteredSoundStream(is, filter)
-        sound.play(fis)
     }
 }

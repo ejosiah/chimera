@@ -16,7 +16,7 @@ class EchoFilter extends SoundFilter{
 
     @Override
     void filter(byte[] samples, int offset, int length) {
-        for(int i=offset; i < offset+length; i +=2){ // TODO check if groovy has step loop
+        offset.step(offset+length, 2){ i ->
             short oldSample = getSample(samples, i)
             short newSample = oldSample + decay * delayBuffer[delayPos]
 
@@ -24,16 +24,14 @@ class EchoFilter extends SoundFilter{
 
             delayBuffer[delayPos] = newSample
             delayPos++
-            if(delayPos == delayBuffer.size()){
-                delayPos = 0
-            }
+            delayPos %= delayBuffer.size()
         }
     }
 
     @Override
     void reset(){
        delayBuffer = delayBuffer.collect{ 0 }
-        delayPos = 0
+       delayPos = 0
     }
 
     @Override
